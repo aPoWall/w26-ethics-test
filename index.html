@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Карта AI Этики | W26 Lab</title>
+    <meta name="description" content="Узнайте своё место на карте AI этики. 8 вопросов о будущем с искусственным интеллектом.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Карта AI Этики | W26 Lab">
+    <meta property="og:description" content="Узнайте своё место на карте AI этики. От дистопии к утопии, от замедления к ускорению.">
+    <meta property="og:image" content="https://YOUR-DOMAIN/assets/web-cover.png">
+    <meta property="og:url" content="https://YOUR-DOMAIN/">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Карта AI Этики | W26 Lab">
+    <meta name="twitter:description" content="Узнайте своё место на карте AI этики">
+    <meta name="twitter:image" content="https://YOUR-DOMAIN/assets/web-cover.png">
+
+    <!-- IBM Plex Mono Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* AI Mindset Brand Colors */
+            --red: #DC2626;
+            --yellow: #F4E04D;
+            --green: #4D9F73;
+            --cyan: #0E7490;
+            --black: #171717;
+            --gray: #737373;
+            --white: #FAFAFA;
+
+            /* Graph Colors */
+            --gradient-start: #F4E04D;
+            --gradient-mid: #4D9F73;
+            --gradient-end: #0E7490;
+        }
+
+        body {
+            font-family: 'IBM Plex Mono', monospace;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--black);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--gray);
+            font-weight: 400;
+            margin-top: 0.5rem;
+        }
+
+        .lab-badge {
+            display: inline-block;
+            background: var(--red);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        /* Axis Indicator */
+        .axis-indicator {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--black);
+            color: white;
+        }
+
+        .axis-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .axis-item span {
+            opacity: 0.7;
+        }
+
+        .axis-item strong {
+            opacity: 1;
+        }
+
+        /* Card Styles */
+        .card {
+            background: white;
+            border: 3px solid var(--black);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 2rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--black);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1rem;
+            background: var(--white);
+            transition: all 0.2s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            background: white;
+            box-shadow: 4px 4px 0 var(--black);
+        }
+
+        /* Question Styles */
+        .question {
+            margin-bottom: 2.5rem;
+        }
+
+        .question-text {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--black);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem;
+            border: 2px solid var(--black);
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .option:hover {
+            background: var(--white);
+            transform: translateX(4px);
+        }
+
+        .option input[type="radio"] {
+            margin-right: 0.75rem;
+            margin-top: 0.25rem;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .option:has(input:checked) {
+            background: var(--yellow);
+            box-shadow: 4px 4px 0 var(--black);
+            transform: translateX(4px);
+        }
+
+        .option-label {
+            flex: 1;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+
+        /* Button Styles */
+        button {
+            width: 100%;
+            padding: 1rem 2rem;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            border: 3px solid var(--black);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: white;
+            color: var(--black);
+        }
+
+        button:hover:not(:disabled) {
+            background: var(--yellow);
+            transform: translate(4px, 4px);
+            box-shadow: -4px -4px 0 var(--black);
+        }
+
+        button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: var(--red);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: var(--black);
+        }
+
+        .btn-secondary {
+            margin-top: 2rem;
+        }
+
+        /* Dashboard Styles */
+        #dashboard {
+            display: none;
+        }
+
+        #dashboard.active {
+            display: block;
+        }
+
+        /* Result Card */
+        .result-card {
+            background: var(--black);
+            color: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            border: 3px solid var(--black);
+        }
+
+        .result-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .result-position {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--red);
+        }
+
+        .result-coords {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .coord {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .coord-label {
+            opacity: 0.7;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .coord-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* 2D Graph */
+        .graph-container {
+            background: white;
+            border: 3px solid var(--black);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .graph-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .graph-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .graph-2d {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%; /* 1:1 aspect ratio */
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 50%, var(--gradient-end) 100%);
+            border: 3px solid var(--black);
+        }
+
+        .graph-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        /* Axis Lines */
+        .axis-line {
+            position: absolute;
+            background: var(--black);
+            opacity: 0.3;
+        }
+
+        .axis-line.vertical {
+            width: 2px;
+            height: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .axis-line.horizontal {
+            height: 2px;
+            width: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Quadrant Labels */
+        .quadrant-labels {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+
+        .quadrant-label {
+            position: absolute;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            opacity: 0.4;
+            padding: 0.5rem;
+        }
+
+        .quadrant-label.top-left {
+            top: 1rem;
+            left: 1rem;
+        }
+
+        .quadrant-label.top-right {
+            top: 1rem;
+            right: 1rem;
+            text-align: right;
+        }
+
+        .quadrant-label.bottom-left {
+            bottom: 1rem;
+            left: 1rem;
+        }
+
+        .quadrant-label.bottom-right {
+            bottom: 1rem;
+            right: 1rem;
+            text-align: right;
+        }
+
+        /* Axis Labels */
+        .axis-labels {
+            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .axis-label {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            background: var(--white);
+            border: 2px solid var(--black);
+        }
+
+        .axis-label span:first-child {
+            opacity: 0.5;
+        }
+
+        /* Participant Dots */
+        .participant-dot {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border: 3px solid var(--black);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .participant-dot:hover {
+            width: 20px;
+            height: 20px;
+            border-width: 4px;
+            z-index: 20;
+        }
+
+        .participant-dot.current {
+            background: var(--red);
+            width: 16px;
+            height: 16px;
+            border-width: 4px;
+            z-index: 15;
+        }
+
+        .participant-dot.current:hover {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: absolute;
+            background: var(--black);
+            color: white;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 0.5rem;
+            z-index: 100;
+        }
+
+        .participant-dot:hover .tooltip {
+            opacity: 1;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border: 3px solid var(--black);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Quadrant Stats */
+        .quadrant-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quadrant-stat {
+            background: white;
+            border: 3px solid var(--black);
+            padding: 1rem;
+        }
+
+        .quadrant-stat-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .quadrant-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* Participants List */
+        .participants-list {
+            background: white;
+            border: 3px solid var(--black);
+            padding: 1.5rem;
+        }
+
+        .participants-list h3 {
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .participant-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            border-bottom: 2px solid var(--white);
+        }
+
+        .participant-item:last-child {
+            border-bottom: none;
+        }
+
+        .participant-name {
+            font-weight: 600;
+        }
+
+        .participant-coords {
+            font-size: 0.75rem;
+            color: var(--gray);
+            font-weight: 600;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .axis-indicator {
+                grid-template-columns: 1fr;
+            }
+
+            .result-coords {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .quadrant-label {
+                font-size: 0.625rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quadrant-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="lab-badge">W26 Lab</div>
+            <h1>Карта AI Этики</h1>
+            <p class="subtitle">Где вы на карте будущего с искусственным интеллектом?</p>
+        </header>
+
+        <div class="axis-indicator">
+            <div class="axis-item">
+                <span>← ДИСТОПИЯ</span>
+                <strong>УТОПИЯ →</strong>
+            </div>
+            <div class="axis-item">
+                <span>↓ ПРИТОРМОЗИТЬ</span>
+                <strong>ПОЕХАЛИ ↑</strong>
+            </div>
+        </div>
+
+        <!-- Test Form -->
+        <div id="test-form">
+            <div class="card">
+                <div class="input-group">
+                    <label for="participant-name">Ваше имя</label>
+                    <input type="text" id="participant-name" placeholder="Введите имя" required>
+                </div>
+
+                <div id="questions-container"></div>
+
+                <button class="btn-primary" id="submit-btn" disabled>Узнать свою позицию</button>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard">
+            <div class="result-card" id="result-card">
+                <h2>Ваша позиция</h2>
+                <div class="result-position" id="result-position">ЦЕНТР</div>
+                <div class="result-coords">
+                    <div class="coord">
+                        <span class="coord-label">Дистопия ← → Утопия</span>
+                        <span class="coord-value" id="result-x">0</span>
+                    </div>
+                    <div class="coord">
+                        <span class="coord-label">Притормозить ↓ → Поехали ↑</span>
+                        <span class="coord-value" id="result-y">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="graph-container">
+                <h3 class="graph-title">Карта сообщества</h3>
+                <div class="graph-wrapper">
+                    <div class="graph-2d">
+                        <div class="graph-content">
+                            <div class="axis-line vertical"></div>
+                            <div class="axis-line horizontal"></div>
+                            <div class="quadrant-labels">
+                                <div class="quadrant-label top-left">Притормозить<br>Дистопию</div>
+                                <div class="quadrant-label top-right">Поехали<br>к Утопии</div>
+                                <div class="quadrant-label bottom-left">Не спешить<br>Опасно</div>
+                                <div class="quadrant-label bottom-right">Осторожный<br>Оптимизм</div>
+                            </div>
+                            <div id="graph-dots"></div>
+                        </div>
+                    </div>
+                    <div class="axis-labels">
+                        <div class="axis-label">
+                            <span>← ДИСТОПИЯ</span>
+                            <strong>УТОПИЯ →</strong>
+                        </div>
+                        <div class="axis-label">
+                            <span>↓ ПРИТОРМОЗИТЬ</span>
+                            <strong>ПОЕХАЛИ ↑</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="total-participants">0</div>
+                    <div class="stat-label">Участников</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="avg-x">0</div>
+                    <div class="stat-label">Средняя X</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="avg-y">0</div>
+                    <div class="stat-label">Средняя Y</div>
+                </div>
+            </div>
+
+            <div class="quadrant-stats">
+                <div class="quadrant-stat">
+                    <div class="quadrant-stat-title">Притормозить дистопию</div>
+                    <div class="quadrant-stat-value" id="q1-count">0%</div>
+                </div>
+                <div class="quadrant-stat">
+                    <div class="quadrant-stat-title">Поехали к утопии</div>
+                    <div class="quadrant-stat-value" id="q2-count">0%</div>
+                </div>
+                <div class="quadrant-stat">
+                    <div class="quadrant-stat-title">Не спешить, опасно</div>
+                    <div class="quadrant-stat-value" id="q3-count">0%</div>
+                </div>
+                <div class="quadrant-stat">
+                    <div class="quadrant-stat-title">Осторожный оптимизм</div>
+                    <div class="quadrant-stat-value" id="q4-count">0%</div>
+                </div>
+            </div>
+
+            <div class="participants-list">
+                <h3>Все участники</h3>
+                <div id="participants-container"></div>
+            </div>
+
+            <button class="btn-secondary" id="retake-btn">Пройти тест заново</button>
+        </div>
+    </div>
+
+    <script>
+        // Test Questions - each affects both X and Y axes
+        const questions = [
+            {
+                id: 1,
+                text: "Как вы видите будущее с искусственным интеллектом?",
+                options: [
+                    { text: "Катастрофа неизбежна, AI уничтожит человечество", x: -2, y: -1 },
+                    { text: "Есть серьезные риски, но мы справимся", x: 0, y: 0 },
+                    { text: "AI откроет невероятные возможности для человечества", x: 2, y: 1 }
+                ]
+            },
+            {
+                id: 2,
+                text: "Как быстро нужно развивать AI технологии?",
+                options: [
+                    { text: "Остановить или сильно замедлить до решения проблем безопасности", x: -1, y: -2 },
+                    { text: "Сбалансировать скорость и безопасность", x: 0, y: 0 },
+                    { text: "На максимальной скорости, риски преувеличены", x: 1, y: 2 }
+                ]
+            },
+            {
+                id: 3,
+                text: "AI для личной продуктивности — это:",
+                options: [
+                    { text: "Опасная зависимость, теряем человечность", x: -1, y: -1 },
+                    { text: "Полезный инструмент, но нужна осторожность", x: 0, y: 0 },
+                    { text: "Экзоскелет для мышления, делает меня сильнее", x: 2, y: 1 }
+                ]
+            },
+            {
+                id: 4,
+                text: "Кто должен контролировать развитие AI?",
+                options: [
+                    { text: "Строгое государственное регулирование и международные договоры", x: -1, y: -2 },
+                    { text: "Баланс между регулированием и свободой инноваций", x: 0, y: 0 },
+                    { text: "Минимум регулирования, максимум свободы для исследователей", x: 1, y: 2 }
+                ]
+            },
+            {
+                id: 5,
+                text: "Что важнее при работе с AI?",
+                options: [
+                    { text: "AI Safety — безопасность превыше всего", x: -2, y: -1 },
+                    { text: "Баланс между безопасностью и пользой", x: 0, y: 0 },
+                    { text: "Joyful AI — радостное использование и эксперименты", x: 2, y: 1 }
+                ]
+            },
+            {
+                id: 6,
+                text: "Ваш подход к AI инструментам:",
+                options: [
+                    { text: "Избегаю, пока не появится четкое понимание рисков", x: -1, y: -2 },
+                    { text: "Использую осторожно, изучаю постепенно", x: 0, y: 0 },
+                    { text: "Dogfooding — использую всё новое на себе первым", x: 1, y: 2 }
+                ]
+            },
+            {
+                id: 7,
+                text: "Обучение работе с AI должно быть:",
+                options: [
+                    { text: "Фокус на этике и ограничениях, сначала безопасность", x: -2, y: -1 },
+                    { text: "Сбалансированный подход", x: 0, y: 0 },
+                    { text: "Mind Engineering — учим мыслить по-новому через практику", x: 2, y: 1 }
+                ]
+            },
+            {
+                id: 8,
+                text: "Прогресс AI — это ответственность:",
+                options: [
+                    { text: "Всего человечества, двигаться вместе медленно", x: -1, y: -2 },
+                    { text: "И сообщества, и индивидуумов", x: 0, y: 0 },
+                    { text: "Каждого человека — экспериментировать и делиться опытом", x: 1, y: 2 }
+                ]
+            }
+        ];
+
+        // State
+        let answers = {};
+        let participants = [];
+
+        // Load participants from API
+        async function loadParticipants() {
+            try {
+                const response = await fetch('/.netlify/functions/participants');
+                if (response.ok) {
+                    participants = await response.json();
+                }
+            } catch (error) {
+                console.error('Error loading participants:', error);
+                // Fallback to localStorage
+                const stored = localStorage.getItem('ethicsTest2DParticipants');
+                if (stored) {
+                    participants = JSON.parse(stored);
+                }
+            }
+        }
+
+        // Save participant to API
+        async function saveParticipant(participant) {
+            try {
+                const response = await fetch('/.netlify/functions/participants', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(participant)
+                });
+
+                if (response.ok) {
+                    // Reload all participants to sync
+                    await loadParticipants();
+                } else {
+                    console.error('Error saving participant');
+                }
+            } catch (error) {
+                console.error('Error saving participant:', error);
+                // Fallback to localStorage
+                localStorage.setItem('ethicsTest2DParticipants', JSON.stringify(participants));
+            }
+        }
+
+        // Render questions
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            questions.forEach((question) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+
+                const questionText = document.createElement('div');
+                questionText.className = 'question-text';
+                questionText.textContent = `${question.id}. ${question.text}`;
+                questionDiv.appendChild(questionText);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options';
+
+                question.options.forEach((option, index) => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'option';
+
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = `question-${question.id}`;
+                    radio.value = index;
+                    radio.id = `q${question.id}-o${index}`;
+
+                    const label = document.createElement('label');
+                    label.htmlFor = `q${question.id}-o${index}`;
+                    label.className = 'option-label';
+                    label.textContent = option.text;
+
+                    optionDiv.appendChild(radio);
+                    optionDiv.appendChild(label);
+                    optionsDiv.appendChild(optionDiv);
+
+                    radio.addEventListener('change', () => {
+                        answers[question.id] = {
+                            x: option.x,
+                            y: option.y
+                        };
+                        checkFormComplete();
+                    });
+                });
+
+                questionDiv.appendChild(optionsDiv);
+                container.appendChild(questionDiv);
+            });
+        }
+
+        // Check if form is complete
+        function checkFormComplete() {
+            const name = document.getElementById('participant-name').value.trim();
+            const allAnswered = Object.keys(answers).length === questions.length;
+            document.getElementById('submit-btn').disabled = !(name && allAnswered);
+        }
+
+        // Calculate scores
+        function calculateScores() {
+            let totalX = 0;
+            let totalY = 0;
+
+            Object.values(answers).forEach(answer => {
+                totalX += answer.x;
+                totalY += answer.y;
+            });
+
+            return { x: totalX, y: totalY };
+        }
+
+        // Get position label
+        function getPositionLabel(x, y) {
+            if (x > 0 && y > 0) return 'ПОЕХАЛИ К УТОПИИ';
+            if (x < 0 && y > 0) return 'ПРИТОРМОЗИТЬ ДИСТОПИЮ';
+            if (x < 0 && y < 0) return 'НЕ СПЕШИТЬ, ОПАСНО';
+            if (x > 0 && y < 0) return 'ОСТОРОЖНЫЙ ОПТИМИЗМ';
+            if (x > 0) return 'ОПТИМИСТ';
+            if (x < 0) return 'ПЕССИМИСТ';
+            if (y > 0) return 'УСКОРИТЕЛЬ';
+            if (y < 0) return 'ОСТОРОЖНЫЙ';
+            return 'ЦЕНТРИСТ';
+        }
+
+        // Get quadrant
+        function getQuadrant(x, y) {
+            if (x > 0 && y > 0) return 2; // Top-right
+            if (x < 0 && y > 0) return 1; // Top-left
+            if (x < 0 && y < 0) return 3; // Bottom-left
+            if (x > 0 && y < 0) return 4; // Bottom-right
+            return 0; // Center
+        }
+
+        // Submit test
+        async function submitTest() {
+            const name = document.getElementById('participant-name').value.trim();
+            const scores = calculateScores();
+            const timestamp = new Date().toISOString();
+
+            const participant = {
+                id: Date.now().toString(),
+                name,
+                x: scores.x,
+                y: scores.y,
+                timestamp,
+                answers: { ...answers }
+            };
+
+            // Save to API
+            await saveParticipant(participant);
+
+            showDashboard(participant);
+        }
+
+        // Show dashboard
+        function showDashboard(currentParticipant) {
+            document.getElementById('test-form').classList.add('hidden');
+            document.getElementById('dashboard').classList.add('active', 'fade-in');
+
+            // Show result
+            const { x, y } = currentParticipant;
+            document.getElementById('result-position').textContent = getPositionLabel(x, y);
+            document.getElementById('result-x').textContent = x > 0 ? `+${x}` : x;
+            document.getElementById('result-y').textContent = y > 0 ? `+${y}` : y;
+
+            // Update dashboard
+            updateDashboard(currentParticipant.id);
+        }
+
+        // Update dashboard
+        function updateDashboard(currentId) {
+            // Update stats
+            document.getElementById('total-participants').textContent = participants.length;
+
+            if (participants.length > 0) {
+                const avgX = (participants.reduce((sum, p) => sum + p.x, 0) / participants.length).toFixed(1);
+                const avgY = (participants.reduce((sum, p) => sum + p.y, 0) / participants.length).toFixed(1);
+
+                document.getElementById('avg-x').textContent = avgX > 0 ? `+${avgX}` : avgX;
+                document.getElementById('avg-y').textContent = avgY > 0 ? `+${avgY}` : avgY;
+
+                // Quadrant stats
+                const q1 = participants.filter(p => getQuadrant(p.x, p.y) === 1).length;
+                const q2 = participants.filter(p => getQuadrant(p.x, p.y) === 2).length;
+                const q3 = participants.filter(p => getQuadrant(p.x, p.y) === 3).length;
+                const q4 = participants.filter(p => getQuadrant(p.x, p.y) === 4).length;
+
+                const total = participants.length;
+                document.getElementById('q1-count').textContent = `${Math.round(q1/total*100)}%`;
+                document.getElementById('q2-count').textContent = `${Math.round(q2/total*100)}%`;
+                document.getElementById('q3-count').textContent = `${Math.round(q3/total*100)}%`;
+                document.getElementById('q4-count').textContent = `${Math.round(q4/total*100)}%`;
+            }
+
+            // Update graph
+            updateGraph(currentId);
+
+            // Update participants list
+            updateParticipantsList();
+        }
+
+        // Update 2D graph
+        function updateGraph(currentId) {
+            const container = document.getElementById('graph-dots');
+            container.innerHTML = '';
+
+            participants.forEach(participant => {
+                const dot = document.createElement('div');
+                dot.className = 'participant-dot';
+                if (participant.id === currentId) {
+                    dot.classList.add('current');
+                }
+
+                // Position: x from -16 to +16 maps to 0% to 100%
+                // y from -16 to +16 maps to 100% (top) to 0% (bottom)
+                const xPos = ((participant.x + 16) / 32) * 100;
+                const yPos = ((16 - participant.y) / 32) * 100;
+
+                dot.style.left = `${xPos}%`;
+                dot.style.top = `${yPos}%`;
+
+                // Tooltip
+                const tooltip = document.createElement('div');
+                tooltip.className = 'tooltip';
+                tooltip.textContent = `${participant.name} (${participant.x > 0 ? '+' : ''}${participant.x}, ${participant.y > 0 ? '+' : ''}${participant.y})`;
+                dot.appendChild(tooltip);
+
+                container.appendChild(dot);
+            });
+        }
+
+        // Update participants list
+        function updateParticipantsList() {
+            const container = document.getElementById('participants-container');
+            container.innerHTML = '';
+
+            // Sort by timestamp (newest first)
+            const sorted = [...participants].sort((a, b) =>
+                new Date(b.timestamp) - new Date(a.timestamp)
+            );
+
+            sorted.forEach(participant => {
+                const item = document.createElement('div');
+                item.className = 'participant-item';
+
+                const name = document.createElement('div');
+                name.className = 'participant-name';
+                name.textContent = participant.name;
+
+                const coords = document.createElement('div');
+                coords.className = 'participant-coords';
+                coords.textContent = `(${participant.x > 0 ? '+' : ''}${participant.x}, ${participant.y > 0 ? '+' : ''}${participant.y})`;
+
+                item.appendChild(name);
+                item.appendChild(coords);
+                container.appendChild(item);
+            });
+        }
+
+        // Reset test
+        function resetTest() {
+            answers = {};
+            document.getElementById('participant-name').value = '';
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            document.getElementById('submit-btn').disabled = true;
+            document.getElementById('dashboard').classList.remove('active');
+            document.getElementById('test-form').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        // Initialize
+        async function init() {
+            await loadParticipants();
+            renderQuestions();
+
+            document.getElementById('participant-name').addEventListener('input', checkFormComplete);
+            document.getElementById('submit-btn').addEventListener('click', submitTest);
+            document.getElementById('retake-btn').addEventListener('click', resetTest);
+
+            // Add click handler to graph for manual positioning
+            const graphContent = document.querySelector('.graph-content');
+            if (graphContent) {
+                graphContent.addEventListener('click', handleGraphClick);
+            }
+
+            // Poll for updates every 5 seconds when dashboard is active
+            setInterval(async () => {
+                if (document.getElementById('dashboard').classList.contains('active')) {
+                    const currentId = participants[participants.length - 1]?.id;
+                    await loadParticipants();
+                    if (currentId) {
+                        updateDashboard(currentId);
+                    }
+                }
+            }, 5000);
+        }
+
+        // Handle click on graph to place participant manually
+        async function handleGraphClick(event) {
+            // Only work in dashboard mode
+            if (!document.getElementById('dashboard').classList.contains('active')) {
+                return;
+            }
+
+            const rect = event.currentTarget.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            // Convert pixel position to coordinates (-16 to +16)
+            const xCoord = Math.round(((x / rect.width) * 32) - 16);
+            const yCoord = Math.round(16 - ((y / rect.height) * 32));
+
+            // Clamp to bounds
+            const xClamped = Math.max(-16, Math.min(16, xCoord));
+            const yClamped = Math.max(-16, Math.min(16, yCoord));
+
+            // Get current participant
+            const currentId = participants[participants.length - 1]?.id;
+            if (!currentId) return;
+
+            // Update current participant position
+            const participant = participants.find(p => p.id === currentId);
+            if (participant) {
+                participant.x = xClamped;
+                participant.y = yClamped;
+
+                // Save updated position to API
+                await saveParticipant(participant);
+
+                // Update display
+                document.getElementById('result-position').textContent = getPositionLabel(xClamped, yClamped);
+                document.getElementById('result-x').textContent = xClamped > 0 ? `+${xClamped}` : xClamped;
+                document.getElementById('result-y').textContent = yClamped > 0 ? `+${yClamped}` : yClamped;
+
+                // Refresh dashboard
+                updateDashboard(currentId);
+            }
+        }
+
+        // Start the app
+        init();
+    </script>
+</body>
+</html>

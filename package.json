@@ -1,0 +1,10 @@
+{
+  "name": "w26-ethics-test",
+  "version": "1.0.0",
+  "description": "W26 Ethics Test with shared participant map",
+  "scripts": {
+    "dev": "netlify dev"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
